@@ -1,0 +1,44 @@
+<% if story.errors.any? %>
+  <div class="notification is-danger">
+    <%= story.errors.full_messages.to_sentence %>
+  </div>
+<% end %>
+
+<%= form_for(story) do |form|%>
+
+<div data-controller="file-upload">
+  <div class="field">
+    <%= form.label :cover_image, '封面圖片' , class: 'label' %>
+      <div class="file has-name">
+        <label class="file-label">
+          <%= form.file_field :cover_image, class: 'file-input' , 'data-file-upload-target' => 'file-upload.fileInput' %>
+            <span class="file-cta">
+              <span class="file-icon">
+                <i class="fas fa-upload"></i>
+              </span>
+              <span class="file-label">
+                選擇檔案…
+              </span>
+            </span>
+            <span class="file-name" data-file-upload-target="file-upload.fileNameDisplay">
+              未選擇任何檔案
+            </span>
+        </label>
+      </div>
+      <%= cover_image(story) %>
+  </div>
+</div>
+
+<div class="field">
+  <%= form.label :title, '標題' %>
+  <%= form.text_field :title, class:'input is-primary' %>
+</div>
+
+<div class="field">
+  <%= form.label :content, '內文' %>
+  <%= form.text_area :content,rows:10, class:'textarea is-primary' %>
+</div>
+<%= form.submit '儲存草稿', name:'save_as_draft', class:'button is-light'%>
+<%= form.submit '發布文章', name:'publish', class:'button is-link' if story.may_publish? %>
+<%= form.submit '下架文章', name:'unpublish', class:'button is-danger' if story.may_unpublish? %>
+<% end %>
