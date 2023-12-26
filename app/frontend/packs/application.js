@@ -7,11 +7,12 @@ import Rails from "@rails/ujs"
 import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
+import axios from "axios";
 
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
 
-console.log('hello world')
 import "controllers"
 import "../stylesheets"
+

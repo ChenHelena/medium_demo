@@ -1,6 +1,7 @@
 class StoriesController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:like, :unlike]
   before_action :find_story, only: [:edit, :destroy, :update]
+  skip_before_action :verify_authenticity_token, only: [:like, :unlike]
 
   def index 
     @stories = current_user.stories.order(created_at: :desc)
@@ -22,7 +23,8 @@ class StoriesController < ApplicationController
       render :new
     end
   end
-
+  
+  
   def edit
   end
 
@@ -47,6 +49,26 @@ class StoriesController < ApplicationController
       render :edit
     end
   end
+
+  def like
+    @story = Story.friendly.find(params[:id])
+    like = current_user.likes.find_or_initialize_by(story: @story)
+    unless user_signed_in?
+      render json: { status: '您尚未登入' }
+      return
+    end
+    
+    if like.persisted?
+      like.destroy
+      is_liked = false
+    else
+      like.save
+      is_liked = true
+    end
+    
+    render json: { likes_count: @story.likes.count, is_liked: is_liked }
+  end
+
 
   private
   def find_story

@@ -21,7 +21,8 @@ class Story < ApplicationRecord
   # relationships
   belongs_to :user
   has_one_attached :cover_image
-
+  has_many :comments
+  has_many :likes, dependent: :destroy
 
   # validations
   validates :title, presence: true
@@ -34,6 +35,9 @@ class Story < ApplicationRecord
   # def destroy
   #   update(deleted_at: Time.now)
   # end #軟刪除手刻
+  # def find_like(user)
+  #   self.likes.where( :user_id => user.id ).first
+  # end
 
   def normalize_friendly_id(input)
     input.to_s.to_slug.normalize(transliterations: :russian).to_s

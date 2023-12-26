@@ -13,7 +13,7 @@ export default class extends Controller {
   static targets = [ "content","output" ]
 
   connect() {
-    console.log('hi')
+    // console.log('hi')
   }
 
   greet() {

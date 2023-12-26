@@ -8,6 +8,8 @@ class PagesController < ApplicationController
   end
 
   def show
+    @comment = @story.comments.new # 這裡是comments的原因是因為 has_many 所生成的複數形式
+    @comments = @story.comments.order(id: :desc)
   end
 
   def user
