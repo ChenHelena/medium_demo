@@ -14,6 +14,8 @@ gem 'babosa', '~> 1.0', '>= 1.0.2'
 gem 'mini_magick', '~> 4.12'
 gem 'bulma-rails'
 gem 'paranoia', '~> 2.6', '>= 2.6.3'
+gem 'jekyll'
+
 
 # Use Puma as the app server
 gem 'puma', '~> 5.0'

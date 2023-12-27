@@ -1,0 +1,28 @@
+<div class="hero">
+  <div class="hero-body">
+    <h1 class="title is-2">故事列表</h1>
+  </div>
+</div>
+
+
+
+<% @stories.each do |story| %>
+  <section class="hero">
+    <div class="hero-body">
+      <p class="title">
+        <%= link_to story.title,edit_story_path(story),class:'has-text-grey-dark' %>
+        <%= content_tag :span, '已發佈' , class: 'tag is-success' if story.published? %>
+      </p>
+      <p class="subtitle">
+        <%= strip_tags(story.content) %>
+      </p>
+      <p>
+        最後編輯時間：<%= time_ago_in_words(story.updated_at) %>
+          <%= link_to '編輯' ,edit_story_path(story), class:'button is-text is-small' %>
+          <%= link_to '刪除' ,story_path(story), class:'button is-danger is-small', method:'delete',data:{confirm:'確定刪除嗎'}
+              %>
+      </p>
+      <hr>
+    </div>
+  </section>
+<% end %>
